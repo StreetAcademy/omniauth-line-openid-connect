@@ -25,6 +25,7 @@ module OmniAuth
           token_endpoint: '/oauth2/v2.1/token',
           userinfo_endpoint: '/v2/profile'
       }
+      option :bot_prompt, nil
 
       uid { user_info.raw_attributes['userId'] }
 
@@ -49,6 +50,12 @@ module OmniAuth
                                        redirect_uri: callback_url,
                                        host: 'api.line.me')
         super
+      end
+
+      def authorize_uri
+        uri = super
+        uri += "&bot_prompt=#{options[:bot_prompt]}" if options[:bot_prompt]
+        uri
       end
 
       def callback_url
