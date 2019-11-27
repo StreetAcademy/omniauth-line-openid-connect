@@ -27,7 +27,9 @@ module OmniAuth
       }
       option :bot_prompt, nil
 
-      uid { user_info.raw_attributes['userId'] }
+      def uid
+        user_info.raw_attributes['userId']
+      end
 
       info do
         {
